@@ -1,8 +1,8 @@
 <x-guest-layout>
 
-    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center" >
-                    {{ __('University Register') }}
-        </h2>
+    <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight text-center">
+        {{ __('University Register') }}
+    </h2>
 
     <form method="POST" action="{{ route('university.register') }}">
         @csrf
@@ -42,6 +42,18 @@
                             name="password_confirmation" required autocomplete="new-password" />
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        <!-- Sector -->
+        <div class="mt-4">
+            <x-input-label for="sector" :value="__('Sector')" />
+
+            <select id="sector" name="sector_id" class="block mt-1 w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                <option value="1">Informatique</option>
+                <option value="3">Commerce</option>
+                <option value="2">Marketing</option>
+                <option value="4">Multimédia</option>
+            </select>
         </div>
 
         <div class="flex items-center justify-end mt-4">

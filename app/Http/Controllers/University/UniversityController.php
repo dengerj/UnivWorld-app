@@ -12,7 +12,7 @@ use Illuminate\View\View;
 use App\Models\University;
 
 
-class ProfileController extends Controller
+class UniversityController extends Controller
 {
     /**
      * Display the user's profile form.
@@ -62,23 +62,46 @@ class ProfileController extends Controller
     
     }
 
+
     public function index()
     {
         $universities = University::all();
-        return response()->json($universities);
+        return view('dashboard', ['universities' => $universities]);
     }
+
 
     public function store(Request $request)
     {
-        $university = University::create($request->all());
-        return response()->json($university, 201);
+        $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'password' => 'required|confirmed',
+            'sector_id' => 'required|in:1,2,3,4', // Valider la valeur du secteur_id
+        ]);
+
+        University::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+            'sector_id' => $request->input('sector_id'), // Utiliser la valeur du secteur_id fournie dans le formulaire
+        ]);
+
+        return redirect()->route('dashboard')->with('success', 'University created successfully.');
     }
+
 
     public function show($id)
     {
         $university = University::findOrFail($id);
-        return response()->json($university);
+        return view('university.show', compact('university'));
     }
+
+    public function getBySectorId($sector_id)
+    {
+        $universities = University::where('sector_id', $sector_id)->get();
+        return view('dashboard', compact('universities'));
+    }
+
 
 
 

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table-> unsignedBigInteger('sector_id');
+            $table->foreign('sector_id')->references('id')->on('sectors')->onDelete('cascade');
         });
     }
 

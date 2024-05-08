@@ -23,8 +23,7 @@ class University extends Authenticatable
         'email',
         'password',
         'description',
-        'user_id',
-        'university_id',
+        'sector_id',
     ];
 
     /**

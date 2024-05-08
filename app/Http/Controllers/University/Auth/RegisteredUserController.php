@@ -33,12 +33,14 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.University::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'sector_id' => 'required|in:1,2,3,4', // Valider la valeur du secteur_id
         ]);
 
         $university = University::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'sector_id' => $request->input('sector_id'), // Utiliser la valeur du secteur_id fournie dans le formulaire
         ]);
 
         event(new Registered($university));

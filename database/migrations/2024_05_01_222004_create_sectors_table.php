@@ -13,11 +13,7 @@ return new class extends Migration
     {
         Schema::create('sectors', function (Blueprint $table) {
             $table->id();
-            $table->string('libellé')->unique();
-            $table->unsignedBigInteger('sector_id')->unique();
-            $table->foreign('sector_id')->references('id')->on('sectors')->onDelete('cascade');
-
-        });
+            $table->string('libellé')->unique();        });
     }
 
     /**
