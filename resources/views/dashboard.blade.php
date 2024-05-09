@@ -10,16 +10,23 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+                <div class="p-6 ">
                     <h3>{{ __("Liste des universités") }}</h3>
                     <ul>
-                        @foreach(App\Models\University::all() as $university)
+                    @foreach(\App\Models\University::all() as $university)
+                            @php
+                                $university_id = $university->id;
+                                $university_name = $university->name;
+                                $university_description = $university->description;
+                                $average_rating = $university->average_rating;
+                                $comments = $university->comments;
+                            @endphp
                             <li>
-                                <h4>{{ $university->name }}</h4>
-                                <p>{{ $university->description }}</p>
-                                <p>Note moyenne : {{ $university->average_rating }}</p>
+                                <h4>{{ $university_name }}</h4>
+                                <p>{{ $university_description }}</p>
+                                <p>Note moyenne : {{ $average_rating }}</p>
                                 <ul>
-                                    @foreach($university->comments as $comment)
+                                    @foreach(\App\Models\Comment::all() as $comment)
                                         <li>
                                             @if ($comment->content)
                                                 {{ $comment->content }}
@@ -27,13 +34,12 @@
                                                 Note : {{ $comment->notation }}
                                             @endif
                                         </li>
-                                        <!-- Afficher d'autres détails du commentaire si nécessaire -->
                                     @endforeach
                                 </ul>
                                 <!-- Formulaire pour poster un commentaire et noter l'université -->
                                 <form method="POST" action="{{ route('comments.store') }}">
                                     @csrf
-                                    <input type="hidden" name="university_id" value="{{ $university->id }}">
+                                    <input type="hidden" name="university_id" value="{{ $university_id }}">
                                     <label for="content">Votre commentaire :</label>
                                     <textarea id="content" name="content" required></textarea>
                                     <label for="rating">Votre note (1-5) :</label>
@@ -42,6 +48,7 @@
                                 </form>
                             </li>
                         @endforeach
+
                     </ul>
                 </div>
             </div>

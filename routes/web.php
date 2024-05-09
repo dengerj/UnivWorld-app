@@ -16,6 +16,7 @@ Route::delete('/users/{id}', [ProfileController::class, 'destroy'])->name('users
 // University
 Route::get('/universities', [UniversityController::class, 'index'])->name('universities.index');
 Route::post('/universities', [UniversityController::class, 'store'])->name('universities.store');
+Route::get('/universities/{id}', 'UniversityController@show')->name('university.dashboard');
 Route::get('/universities/{id}', [UniversityController::class, 'show'])->name('universities.show');
 Route::get('/universities/{id}/edit', [UniversityController::class, 'edit'])->name('universities.edit');
 Route::patch('/universities/{id}', [UniversityController::class, 'update'])->name('universities.update');
